@@ -1,7 +1,5 @@
 var express = require('express');
 var passport = require('passport');
-var flash = require('connect-flash');
-var Account = require('../models/account');
 var router = express.Router();
 
 /* GET home page. */
@@ -10,19 +8,34 @@ router.get('/', isLoggedIn, function(req, res){
 });
 
 router.get('/login', function(req, res){
-  res.render('login', { message: '' }); // we should come to flash later
-  //res.render('login', { message: req.flash('loginMessage')});
+  res.render('login', { message: req.session.messages ? req.session.messages : ''});
+});
+
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect : '/',
+  failureRedirect : '/login',
+  failureMessage : true
+}));
+
+router.post('/logout', function(req, res){
+  req.logout();
+  req.redirect('/');
 });
 
 //this will be an internal page first, use to create the admin user 
 //and then all the user should only be created by the admin user, 
 //this page will only be accessed by admin  
-router.get('/signup', function(req, res){
-  res.render('signup', { message: '' });
-  //res.render('signup', { message: req.flash('signupMessage')})
+router.get('/signup', isAdmin, function(req, res){
+  res.render('signup', { message: req.session.messages ? req.session.messages : ''});
 });
 
-router.get('/admin', isLoggedIn, function(req, res){
+router.post('/signup', passport.authenticate('local-signup', {
+    successRedirect : '/', // redirect to the / section
+    failureRedirect : '/signup', // redirect back to the signup page if there is an error
+    failureMessage : true // allow messages
+}));
+
+router.get('/admin', isAdmin, function(req, res){
   res.render('admin');
 });
 
@@ -31,6 +44,12 @@ function isLoggedIn(req, res, next){
     return next();
   }
   res.redirect('/login');
-  console.log('finished the redirect');
+}
+
+function isAdmin(req, res, next){
+  if(req.isAuthenticated() && req.user && req.user.local && req.user.local.username === 'admin'){
+    return next();
+  }
+  res.redirect('/');
 }
 module.exports = router;

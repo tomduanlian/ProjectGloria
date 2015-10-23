@@ -6,14 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var flash = require('connect-flash');
 var session = require('express-session');
-var LocalStrategy = require('passport-local').Strategy;
 
 var routes = require('./routes/index');
-//var users = require('./routes/users');
 
 var app = express();
+
+// mongoose
+mongoose.connect('mongodb://localhost/project_gloria');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,17 +27,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-//app.use('/users', users);
+// passport and flash
+app.use(session({
+    secret : '{ilovegloriaandicanthelp}', 
+    resave: true,
+    saveUninitialized: true
+  })); 
+app.use(passport.initialize());
+app.use(passport.session());
 
 // passport config
-var Account = require('./models/account');
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
+require('./config/passport')(passport);
 
-// mongoose
-mongoose.connect('mongodb://localhost/project_gloria');
+app.use('/', routes);
+//app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
