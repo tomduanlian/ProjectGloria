@@ -4,7 +4,7 @@ var Account = require('../models/account');
 
 module.exports = function(passport) {
   passport.serializeUser(function(acc, done) {
-    done(null, acc.id);
+    done(null, acc._id);
   });
 
   passport.deserializeUser(function(id, done) {
@@ -25,7 +25,7 @@ module.exports = function(passport) {
         }
         // check to see if theres already a account with that username  
         if (acc) {
-            return done(null, false, 'That username already existed.');
+            return done(null, false, {'message': 'That username already existed.'});
         } else {
           // create the account
           var newAccount = new Account();
@@ -53,7 +53,7 @@ module.exports = function(passport) {
         return done(err);
       }
       if(!acc || !acc.validPassword(password)) {
-        return done(null, false, 'Username or password incorrect!');
+        return done(null, false, {'message': 'Username or password incorrect!'});
       }
       return done(null, acc);
     })

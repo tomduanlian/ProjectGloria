@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
+var flash = require('connect-flash');
 var session = require('express-session');
 
 var routes = require('./routes/index');
@@ -28,6 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // passport and flash
+app.use(flash());
 app.use(session({
     secret : '{ilovegloriaandicanthelp}', 
     resave: true,

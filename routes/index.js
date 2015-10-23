@@ -1,5 +1,6 @@
 var express = require('express');
 var passport = require('passport');
+var flash = require('connect-flash');
 var router = express.Router();
 
 /* GET home page. */
@@ -8,14 +9,15 @@ router.get('/', isLoggedIn, function(req, res){
 });
 
 router.get('/login', function(req, res){
-  res.render('login', { message: req.session.messages ? req.session.messages : ''});
+  res.render('login', { message: req.flash('error')});
 });
 
 router.post('/login', passport.authenticate('local-login', {
   successRedirect : '/',
   failureRedirect : '/login',
-  failureMessage : true
+  failureFlash : true
 }));
+
 
 router.post('/logout', function(req, res){
   req.logout();
@@ -26,13 +28,13 @@ router.post('/logout', function(req, res){
 //and then all the user should only be created by the admin user, 
 //this page will only be accessed by admin  
 router.get('/signup', isAdmin, function(req, res){
-  res.render('signup', { message: req.session.messages ? req.session.messages : ''});
+  res.render('signup', { message: req.flash('error')});
 });
 
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect : '/', // redirect to the / section
     failureRedirect : '/signup', // redirect back to the signup page if there is an error
-    failureMessage : true // allow messages
+    failureFlash : true // allow messages
 }));
 
 router.get('/admin', isAdmin, function(req, res){
