@@ -15,8 +15,15 @@
 <body class="container">
     <main>
         <div class="jumbotron">
-            <h1>Welcome</h1>
+            <h1>Welcome  <%- user.local.username %></h1>
+            <% if(user.local.username === 'admin') { %>
+                <a href="/signup" class="btn btn-primary btn-lg">Create a new user</a>
+            <% } %>
+            <a href="/logout" class="btn btn-primary btn-lg">Logout</a>
         </div>
     </main>
+    <footer>
+        <p class="text-center text-muted">© All Rights Reserved by Tom Duan</p>
+    </footer>
 </body>
 </html>
