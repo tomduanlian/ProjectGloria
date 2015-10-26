@@ -1,0 +1,28 @@
+<!-- views/admin.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Page</title>
+    <% include ./parts/head %>
+</head>
+<body class="container">
+    <header>
+        <% include ./parts/header %>
+    </header>
+    <main>
+        <a href="/signup" class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-plus"></span> Create a new account</a>
+        <p>
+        <ul class="list-group">
+            <% console.log(accList) %>
+            <% for (var i = 0; i < accList.length; i ++) { %>
+             <li class="list-group-item"><%= accList[i] %>
+             <a href="/" class="btn btn-sm pull-right"><span class="glyphicon glyphicon-trash"></span></a>
+             </li>
+            <% } %>
+        </ul>
+    </main>
+    <footer>
+        <% include ./parts/footer %>
+    </footer>
+</body>
+</html>

@@ -1,10 +1,14 @@
 var express = require('express');
 var passport = require('passport');
 var flash = require('connect-flash');
+var Account = require('../models/account');
 var router = express.Router();
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res){
+  if (req.user.local.username === 'admin') {
+    return res.redirect('/admin');   
+  };
   res.render('index', { user: req.user, pageType : 'index' });
 });
 
@@ -38,7 +42,20 @@ router.post('/signup', passport.authenticate('local-signup', {
 }));
 
 router.get('/admin', isAdmin, function(req, res){
-  res.render('admin');
+  Account
+    .find()
+    .where('local.username')
+    .ne('admin')
+    .exec(function(err, accounts){
+      var accNameList = [];
+      var i;
+      var acc;
+      for(i = 0; i < accounts.length; i ++) {
+        acc = accounts[i];
+        accNameList.push(acc.local.username);
+      }
+      res.render('admin', { pageType : 'admin', accList : accNameList });
+    });
 });
 
 function isLoggedIn(req, res, next){
