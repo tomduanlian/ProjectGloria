@@ -5,11 +5,14 @@
     <title>Login to Gloria</title>
     <% include ./parts/head %>
 </head>
-<body>
+<body class="container">
+    <header>
+        <% include ./parts/userHeader %>
+    </header>
     <main>
         <div class="container">
-            <div class="col-sm-6 col-sm-offset-3">
-                <h1>Login</h1>
+            <div class="col-sm-3">
+                <h1>Please Login</h1>
                 <% if (message.length > 0) { %>
                     <div class="alert alert-danger"><%= message %></div>
                 <% } %>

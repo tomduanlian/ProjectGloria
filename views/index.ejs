@@ -6,13 +6,15 @@
     <% include ./parts/head %>
 </head>
 <body class="container">
+    <header>
+        <% include ./parts/userHeader %>
+    </header>
     <main>
         <div class="jumbotron">
-            <h1>Welcome  <%- user.local.username %></h1>
+            <h1>Hi  <%- user.local.username %> !</h1>
             <% if(user.local.username === 'admin') { %>
                 <a href="/signup" class="btn btn-primary btn-lg">Create a new user</a>
             <% } %>
-            <a href="/logout" class="btn btn-primary btn-lg">Logout</a>
         </div>
     </main>
     <footer>

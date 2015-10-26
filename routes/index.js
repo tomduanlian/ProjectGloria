@@ -5,11 +5,11 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res){
-  res.render('index', { user: req.user });
+  res.render('index', { user: req.user, pageType : 'index' });
 });
 
 router.get('/login', function(req, res){
-  res.render('login', { message: req.flash('error')});
+  res.render('login', { message: req.flash('error'), pageType : 'login' });
 });
 
 router.post('/login', passport.authenticate('local-login', {
@@ -28,7 +28,7 @@ router.get('/logout', function(req, res){
 //and then all the user should only be created by the admin user, 
 //this page will only be accessed by admin  
 router.get('/signup', isAdmin, function(req, res){
-  res.render('signup', { message: req.flash('error')});
+  res.render('signup', { message: req.flash('error'), pageType : 'signup'});
 });
 
 router.post('/signup', passport.authenticate('local-signup', {

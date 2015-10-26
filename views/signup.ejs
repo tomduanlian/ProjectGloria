@@ -5,10 +5,13 @@
     <title>Sign up a new accout to Gloria</title>
     <% include ./parts/head %>
 </head>
-<body>
+<body class="container">
     <main>
+        <header>
+            <% include ./parts/userHeader %>
+        </header>
         <div class="container">
-            <div class="col-sm-6 col-sm-offset-3">
+            <div class="col-sm-3">
                 <h1>Create a New Account</h1>
                 <% if (message.length > 0) { %>
                     <div class="alert alert-danger"><%= message %></div>
