@@ -5,7 +5,6 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', isLoggedIn, function(req, res){
-  console.log(req.user);
   res.render('index', { user: req.user });
 });
 
@@ -19,13 +18,10 @@ router.post('/login', passport.authenticate('local-login', {
   failureFlash : true
 }));
 
-
 router.get('/logout', function(req, res){
   req.session.destroy(function(){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
     res.redirect('/');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-  });  
-  //req.logout();
-  //req.redirect('/');
+  });
 });
 
 //this will be an internal page first, use to create the admin user 
