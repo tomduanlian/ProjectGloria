@@ -23,7 +23,7 @@ router.post('/login', passport.authenticate('local-login', {
 }));
 
 router.get('/logout', function(req, res){
-  req.session.destroy(function(){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+  req.session.destroy(function(){                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
     res.redirect('/');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
   });
 });
@@ -31,7 +31,7 @@ router.get('/logout', function(req, res){
 //this will be an internal page first, use to create the admin user 
 //and then all the user should only be created by the admin user, 
 //this page will only be accessed by admin  
-router.get('/signup', isAdmin, function(req, res){
+router.get('/signup', function(req, res){
   res.render('signup', { message: req.flash('error'), pageType : 'signup'});
 });
 
