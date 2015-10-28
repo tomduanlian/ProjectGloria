@@ -1,6 +1,9 @@
 # ProjectGloria
-Gloria will be a small web application for oversee all the personal project I am working on.
+Gloria is a ReactJs - NodeJs - Mongo DB study project of Tom
 
-Use mongodb as database and the mongodb daemon should always running.
+Usage:
+  sudo mongod;
+  npm install .
+  gulp
 
-To run Gloria: node ./bin/www and it will listen to 8000 port for now.
+open localhost:8000 for seeing the result.
